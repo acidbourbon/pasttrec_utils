@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+tdc_interface=$(cat settings.ini | grep "tdc_interface" | sed 's/tdc_interface=//')
+
+./readdata2.pl -d $tdc_interface -v -t 8 -m 0x00 | pv > /dev/null

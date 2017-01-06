@@ -1,0 +1,23 @@
+#!/bin/bash
+
+spi_interface=$(cat settings.ini | grep "spi_interface" | sed 's/spi_interface=//')
+
+stty -F $spi_interface raw speed 9600
+chip=$1
+chan=$2 #zero based
+val=$3
+
+val=$[ $val + 15 ]
+
+chan=$[ $chan + 4 ]
+
+if [ $chip == "0" ]; then
+echo "0x52"$(printf "%01x%02x" $chan $val) | tee $spi_interface
+elif [ $chip == "1" ]; then
+echo "0x54"$(printf "%01x%02x" $chan $val) | tee $spi_interface
+else
+echo "invalid chip number, usage: ./baseline <chip> <channel> <value>"
+echo " chip = 0|1,  channel = 0-7, value = (-15)-15"
+fi
+
+

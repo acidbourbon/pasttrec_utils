@@ -1,0 +1,3 @@
+#!/bin/bash
+./spi chip0_black_settings_thr127
+./spi chip1_black_settings_thr127

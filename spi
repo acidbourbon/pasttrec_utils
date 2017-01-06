@@ -1,0 +1,6 @@
+#!/bin/bash
+
+spi_interface=$(cat settings.ini | grep "spi_interface" | sed 's/spi_interface=//')
+
+stty -F $spi_interface raw speed 9600
+cat $1 >$spi_interface

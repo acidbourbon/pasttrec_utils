@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+spi_interface=$(cat settings.ini | grep "spi_interface" | sed 's/spi_interface=//')
+stty -F $spi_interface raw speed 9600
+
+chip=$1
+thresh=$2
+
+
+if [ $chip == "0" ]; then
+echo "0x523"$(printf "%02x" $thresh) | tee $spi_interface
+elif [ $chip == "1" ]; then
+echo "0x543"$(printf "%02x" $thresh) | tee $spi_interface
+else
+echo "invalid chip number, usage: ./threshold <chip> <thresh>"
+echo " chip = 0|1, thresh = 0-127"
+fi
